@@ -16,6 +16,7 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #define max_fly 100
@@ -40,11 +41,13 @@ volo vol[max_fly];
 //inputs
 int scelta;
 int num_posti;
-char cod_volo;
 
 //working variables
 int i = 0;
 bool flag = false; //flag = false;
+
+void prenotazione();
+void inserimento();
 
 int main(){
 
@@ -69,6 +72,7 @@ int main(){
 }
 
 void prenotazione(){
+	char cod_volo = ' ';
 
     printf(":: insert the code of fly: \n");
     scanf("%s", &cod_volo);
@@ -76,32 +80,30 @@ void prenotazione(){
     i = 0;
 
     do{
-            int parse;
-            parse = strcmp(cod_volo, vol[i].cod_volo);
 
-        if(parse == 0){
+        if(strcmp(&cod_volo, vol[i].cod_volo) == 0){
 
             printf(":: insert the number of seat to prenotate: \n");
             scanf("%d", &num_posti);
+            fflush(stdin);
 
             if(vol[i].tot_posti >= num_posti){
                 flag = true;
                 vol[i].posti_occup = vol[i].posti_occup + num_posti;
             }
 
-        }else{ printf(":: the inserted code is not valid! \n"); }
+            if(flag == true)
+            	printf(":: fly rented with succesfuly! \n");
+            else
+            	printf(":: Could not rent the fly! \n");
+
+        }else
+        	printf(":: the inserted code is not valid! \n");
 
         i = i + 1;
 
     }while(i <= n_voli);
 
-
-    if(flag == false){
-
-        printf(":: Could not rent the fly!");
-    }else{
-        printf(":: fly rented with succesfuly!");
-    }
 }
 
 void inserimento(){
@@ -110,13 +112,13 @@ void inserimento(){
 
         printf(":: Insert code of vole: \n");
 		scanf("%s", vol[i].cod_volo);
-		printf(":: insert city of the departure \n:");
+		printf(":: insert city of the departure: \n");
 		scanf("%s", vol[i].citta_partenza);
-		printf(":: insert city of the arrival \n:");
+		printf(":: insert city of the arrival: \n");
 		scanf("%s", vol[i].citta_arrivo);
-		printf(":: insert total of seats \n:");
+		printf(":: insert total of seats: \n");
 		scanf("%d", &vol[i].tot_posti);
-		printf(":: insert the number of occuped seats \n:");
+		printf(":: insert the number of occuped seats: \n");
 		scanf("%d", &vol[i].posti_occup);
     }
 }
